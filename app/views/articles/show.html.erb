@@ -22,11 +22,13 @@
     <%= simple_format(@article.description) %>
   </div>
 </div>
-<%= link_to "Edit his article", edit_article_path(@article), class: "btn btn-primary" %>
-<%= link_to "Delete his article",
-    article_path(@article),
-    method: :delete,
-    data: {confirm: "Are you sure?"},
-    class: "btn btn-danger"
-%>
+<% if logged_in? && current_user == article.user %>
+  <%= link_to "Edit his article", edit_article_path(@article), class: "btn btn-primary" %>
+  <%= link_to "Delete his article",
+      article_path(@article),
+      method: :delete,
+      data: {confirm: "Are you sure?"},
+      class: "btn btn-danger"
+  %>
+<% end %>
 <%= link_to "View all Articles", articles_path, class: "btn btn-success" %>

@@ -3,3 +3,6 @@
   <%= link_to "Create new article", new_article_path %>
 </div>
 <%= render 'article', obj: @articles %>
+<div class="text-center">
+  <%= will_paginate :renderer => WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+</div>
