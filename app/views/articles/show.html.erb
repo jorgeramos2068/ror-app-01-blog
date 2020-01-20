@@ -22,7 +22,14 @@
     <%= simple_format(@article.description) %>
   </div>
 </div>
-<% if logged_in? && (current_user == article.user || current_user.admin?) %>
+<% if @article.categories.any? %>
+<div class="row">
+  <div class="col-12">
+    <p>Categories: <%= render @article.categories %></p>
+  </div>
+</div>
+<% end %>
+<% if logged_in? && (current_user == @article.user || current_user.admin?) %>
   <%= link_to "Edit his article", edit_article_path(@article), class: "btn btn-primary" %>
   <%= link_to "Delete his article",
       article_path(@article),

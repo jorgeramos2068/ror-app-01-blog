@@ -5,6 +5,7 @@
     <thead>
       <tr>
         <th>Name</th>
+        <th>Total of articles</th>
         <th>Edit</th>
       </tr>
     </thead>
@@ -14,6 +15,14 @@
           <td>
             <%= link_to "#{category.name}", category_path(category) %>
           </td>
+          <td>
+            <%= pluralize(category.articles.count, "article") %>
+          </td>
+          <td>
+          <% if logged_in? and current_user.admin? %>
+            <%= link_to "Edit", edit_category_path(category), class: "btn btn-primary" %>
+          <% end %>
+        </td>
         </tr>
       <% end %>
     </tbody>

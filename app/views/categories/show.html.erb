@@ -1,0 +1,15 @@
+<h1 class="text-center mb-4">
+  <%= @category.name %>
+</h1>
+<h2 class="text-center mb-4">
+  Articles for this category
+</h2>
+<%= render 'articles/article', obj: @category_articles %>
+<div class="text-center">
+  <%= will_paginate  @category_articles, :renderer => WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+</div>
+<hr>
+<% if logged_in? and current_user.admin? %>
+  <%= link_to "Edit his category", edit_category_path(@category), class: "btn btn-primary" %>
+<% end %>
+<%= link_to "View all Categories", categories_path, class: "btn btn-success" %>

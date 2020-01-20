@@ -1,6 +1,5 @@
 class ArticlesController < ApplicationController
   before_action :require_user, except: [:index, :show]
-  before_action :require_same_user, only: [:edit, :update, :destroy]
 
   def index
     @articles = Article.paginate(page: params[:page], per_page: 5)
@@ -28,10 +27,12 @@ class ArticlesController < ApplicationController
 
   def edit
     @article = Article.find(params[:id])
+    require_same_user
   end
 
   def update
     @article = Article.find(params[:id])
+    require_same_user
     if @article.update(article_params)
       flash[:notice] = "Article was successfully updated"
       redirect_to article_path(@article)
@@ -42,6 +43,7 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article = Article.find(params[:id])
+    require_same_user
     @article.destroy
     flash[:notice] = "Article was succesfully deleted"
     redirect_to articles_path
@@ -50,7 +52,7 @@ class ArticlesController < ApplicationController
   # White list
   private
   def article_params
-    params.require(:article).permit(:title, :description)
+    params.require(:article).permit(:title, :description, category_ids: [])
   end
 
   def require_same_user
